@@ -55,8 +55,6 @@ class ProductServiceApplicationTests {
                 .body("productDescription", Matchers.equalTo("Its a good Phone"))
                 .body("productPrice", Matchers.equalTo(123567.23f));
 
-
-
     }
 
 }
