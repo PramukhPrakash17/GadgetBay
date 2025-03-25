@@ -25,3 +25,10 @@ replay_pid*
 
 # SQL Databases
 data/
+
+# IntelliJ
+# IDE specific files
+.idea/
+*.iml
+*.ipr
+*.iws

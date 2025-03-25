@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Lazy;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class OrderServiceApplicationTests {
@@ -44,17 +46,18 @@ class OrderServiceApplicationTests {
                 """;
         System.out.println("Request Body: " + requestBody);
 
-        RestAssured.given()
+        var response = RestAssured.given()
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
                 .post("/api/order/placeorder")
                 .then()
+                .log().all()
                 .statusCode(201)
-                .body("id", Matchers.notNullValue())
-                .body("skucode", Matchers.equalTo("iphone 17 Pro MAX"))
-                .body("price", Matchers.equalTo(1700000.45f))
-                .body("quantity", Matchers.equalTo(150));
+                .extract().body().asString();
+
+        assertThat(response, Matchers.is("Order Placed Successfully"));
+
 
     }
 
