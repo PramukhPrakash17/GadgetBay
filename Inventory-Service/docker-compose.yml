@@ -1,0 +1,12 @@
+version: '4'
+services:
+  MySQL:
+    image: mysql:latest
+    container_name: inv_mysql
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
