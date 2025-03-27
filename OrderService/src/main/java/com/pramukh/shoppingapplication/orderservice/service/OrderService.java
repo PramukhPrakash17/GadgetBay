@@ -1,5 +1,6 @@
 package com.pramukh.shoppingapplication.orderservice.service;
 
+import com.pramukh.shoppingapplication.orderservice.Clents.InventoryClient;
 import com.pramukh.shoppingapplication.orderservice.DTO.OrderRequest;
 import com.pramukh.shoppingapplication.orderservice.DTO.OrderResponseDto;
 import com.pramukh.shoppingapplication.orderservice.model.Order;
@@ -14,8 +15,12 @@ import java.util.UUID;
 public class OrderService {
 
     private final OrderRepo orderRepo;
+    private final InventoryClient inventoryClient;
 
-    public OrderResponseDto placeOrder(OrderRequest orderRequest) {
+    public String placeOrder(OrderRequest orderRequest) {
+        if(!inventoryClient.isInstock(orderRequest.skucode(), orderRequest.quantity())) {
+            throw new RuntimeException("Product with name " + orderRequest.skucode() + "out of stock");
+        }
         Order order = Order.builder()
                 .orderNumber(UUID.randomUUID().toString())
                 .skucode(orderRequest.skucode())
@@ -23,7 +28,6 @@ public class OrderService {
                 .quantity(orderRequest.quantity())
                 .build();
         orderRepo.save(order);
-        return new OrderResponseDto(order.getId(), order.getOrderNumber(), order.getSkucode(), order.getPrice(), order.getQuantity());
-
+        return "Order Placed Successfully";
     }
 }
