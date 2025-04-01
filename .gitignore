@@ -25,6 +25,13 @@ replay_pid*
 
 # SQL Databases
 data/
+**/data/
+**/.mongodb/
+*.ns
+*.mongod.lock
+*.wt
+*.turtle
+storage.bson
 
 # IntelliJ
 # IDE specific files
