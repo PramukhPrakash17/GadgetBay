@@ -1,14 +1,12 @@
 package com.pramukh.shoppingapplication.orderservice.Clents;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.GetExchange;
 
-@FeignClient(value = "inventory-service" , url = "${inventory-url}")
 public interface InventoryClient {
 
-    @GetMapping("/api/inventory/checkinventory")
+    @GetExchange("/api/inventory/checkinventory")
     boolean isInstock(@RequestParam String skucode, @RequestParam Integer quantity);
 
 
