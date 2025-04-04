@@ -2,6 +2,7 @@ package com.pramukh.shoppingapplication.orderservice.config;
 
 import com.pramukh.shoppingapplication.orderservice.Clents.InventoryClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.ClientHttpRequestFactories;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
@@ -23,5 +24,7 @@ public class RestClientConfig {
         var restClientAdapter = RestClientAdapter.create(restClient);
         var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();
         return httpServiceProxyFactory.createClient(InventoryClient.class);
+
+
     }
 }
